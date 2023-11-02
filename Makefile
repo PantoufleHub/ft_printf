@@ -6,7 +6,7 @@
 #    By: aperron <aperron@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/02 11:32:50 by aperron           #+#    #+#              #
-#    Updated: 2023/11/02 15:30:48 by aperron          ###   ########.fr        #
+#    Updated: 2023/11/02 19:22:14 by aperron          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,23 +17,23 @@ FLAGS		= -Wall -Wextra -Werror
 
 RM			= rm -f
 
-SRCS		= ft_printf.c utils.c
+SRCS		= ft_printf.c utils.c write_functions.c
 OBJS		= $(SRCS:.c=.o)
 
-all:		$(NAME) header
+all:		$(NAME)
 
-$(NAME):	$(OBJS) header
-			@ar rcs $(NAME) $(OBJS)
+$(NAME):	$(OBJS)
+			ar rcs $(NAME) $(OBJS)
 
-clean:		header
-			@$(RM) $(OBJS)
+%.o: %.c
+	$(CC) $(FLAGS) -c -o $@ $^
+
+clean:		
+			$(RM) $(OBJS)
 
 fclean:		clean
-			@$(RM) $(NAME)
+			$(RM) $(NAME)
 
-re:			@fclean $(NAME)
-
-header:
-			@echo "RUNNING..."
+re:			fclean $(NAME)
 
 .PHONY:		all clean fclean re

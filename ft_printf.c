@@ -6,7 +6,7 @@
 /*   By: aperron <aperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 11:16:30 by aperron           #+#    #+#             */
-/*   Updated: 2023/11/02 16:37:40 by aperron          ###   ########.fr       */
+/*   Updated: 2023/11/02 19:52:02 by aperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int	ft_printf(const char *str, ...)
 	va_start(args, str);
 	while (str[index] != '\0')
 	{
-		if (str[index] == '%')
-			to_interpret = 1;
-		else if (to_interpret == 1)
+		if (to_interpret == 1)
 		{
 			determine_output(str[index], args, &nb_chars);
 			to_interpret = 0;
 		}
+		else if (str[index] == '%')
+			to_interpret = 1;
 		else
 			write_output_char(str[index], &nb_chars);
 		index++;
@@ -40,8 +40,25 @@ int	ft_printf(const char *str, ...)
 	return (nb_chars);
 }
 
-int	main(int argc, char const *argv[])
-{
-	printf("Nb chars: %i\n", ft_printf("1%%2%c34\n", 'i', "MA"));
-	return (0);
-}
+// int	main(int argc, char const *argv[])
+// {
+// 	int me = 0;
+// 	int you = 0;
+// 	int	n = 10;
+// 	int	*pn = &n;
+// 	me = ft_printf("|| %c || %s || %p || %d || %i || %u || %x || %X || %% ||", 
+// 					'c', "Hello", pn, -1234, -567, 6789, 255, -255);
+// 	printf("\n");
+// 	you = printf("|| %c || %s || %p || %d || %i || %u || %x || %X || %% ||",
+// 					'c', "Hello", pn, -1234, -567, 6789, 255, -255);
+// 					printf("\n");
+// 	printf("\nNb chars: %i || Expected: %i\n", me, you);
+// 	argc++;
+// 	argv++;
+// 	// int a = ft_printf(" %c ", '0');
+// 	// int b = printf(" %c ", '0');
+
+// 	// printf("\n%d %d\n", a, b);
+// 	// printf("new change\n");
+// 	return (0);
+// }

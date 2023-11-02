@@ -6,7 +6,7 @@
 /*   By: aperron <aperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 12:01:00 by aperron           #+#    #+#             */
-/*   Updated: 2023/11/02 16:23:47 by aperron          ###   ########.fr       */
+/*   Updated: 2023/11/02 18:45:44 by aperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,16 @@ void	write_output_char(char c, int *counter);
 
 void	write_string(char *c, int *counter);
 
-char	*int_to_hexa(int nb);
+char	*long_hexa(long nb, char *base);
 
-void	write_number(long nb, int *counter);
+void	write_number(long n, int *counter);
 
 void	determine_output(char format, va_list args, int *counter);
+
+void	reverse_string(char *str);
+
+long	math_abs(long n);
+
+void	write_pointer(void *p, int *counter);
 
 #endif
