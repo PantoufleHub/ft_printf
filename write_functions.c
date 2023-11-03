@@ -6,7 +6,7 @@
 /*   By: aperron <aperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:52:55 by aperron           #+#    #+#             */
-/*   Updated: 2023/11/02 19:51:54 by aperron          ###   ########.fr       */
+/*   Updated: 2023/11/03 16:06:02 by aperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,23 @@ void	write_output_char(char c, int *counter)
 	*counter += 1;
 }
 
-void	write_string(char *str, int *counter)
+void	write_string(char *str, int *counter, int to_free)
 {
 	int	index;
 
-	index = 0;
-	while (str[index] != '\0')
+	if (str == NULL)
+		write_string("(null)", counter, 0);
+	else
 	{
-		write_output_char(str[index], counter);
-		index++;
+		index = 0;
+		while (str[index] != '\0')
+		{
+			write_output_char(str[index], counter);
+			index++;
+		}
 	}
+	if (to_free == 1)
+		free(str);
 }
 
 void	write_number(long n, int *counter)
@@ -57,7 +64,7 @@ void	write_pointer(void *p, int *counter)
 {
 	char	*str;
 
-	str = long_hexa((long)p, "0123456789abcdef");
-	write_string("0x", counter);
-	write_string(str, counter);
+	str = long_hexa((unsigned long long)p, "0123456789abcdef");
+	write_string("0x", counter, 0);
+	write_string(str, counter, 1);
 }

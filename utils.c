@@ -6,28 +6,26 @@
 /*   By: aperron <aperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 13:40:49 by aperron           #+#    #+#             */
-/*   Updated: 2023/11/02 19:53:37 by aperron          ###   ########.fr       */
+/*   Updated: 2023/11/03 16:03:49 by aperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*long_hexa(long n, char *base)
+char	*long_hexa(unsigned long long n, char *base)
 {
 	char	*hexa;
 	int		index;
-	int		is_neg;
+	int		n2;
 
 	index = 0;
-	is_neg = 0;
-	hexa = (char *)malloc(sizeof(char) * 13);
+	n2 = n;
+	hexa = (char *)malloc(sizeof(char) * (30));
 	if (n != 0)
 	{
-		if (n < 0)
-			is_neg = 1;
 		while (n != 0)
 		{
-			hexa[index++] = base[math_abs(n) % 16];
+			hexa[index++] = base[n % 16];
 			n /= 16;
 		}
 	}
@@ -41,13 +39,13 @@ char	*long_hexa(long n, char *base)
 void	determine_output(char format, va_list args, int *counter)
 {
 	char	*str;
-	
+
 	if (format == '%')
 		write_output_char('%', counter);
 	if (format == 'c')
 		write_output_char(va_arg(args, int), counter);
 	if (format == 's')
-		write_string(va_arg(args, char *), counter);
+		write_string(va_arg(args, char *), counter, 0);
 	if (format == 'd' || format == 'i')
 		write_number(va_arg(args, int), counter);
 	if (format == 'u')
@@ -55,14 +53,12 @@ void	determine_output(char format, va_list args, int *counter)
 	if (format == 'x')
 	{
 		str = long_hexa(va_arg(args, unsigned int), "0123456789abcdef");
-		write_string(str, counter);
-		free(str);
+		write_string(str, counter, 1);
 	}
 	if (format == 'X')
 	{
 		str = long_hexa(va_arg(args, unsigned int), "0123456789ABCDEF");
-		write_string(str, counter);
-		free(str);
+		write_string(str, counter, 1);
 	}
 	if (format == 'p')
 		write_pointer(va_arg(args, void *), counter);
@@ -85,11 +81,4 @@ void	reverse_string(char *str)
 		str[length - index - 1] = tmp;
 		index++;
 	}
-}
-
-long	math_abs(long n)
-{
-	if (n >= 0)
-		return (n);
-	return (-n);
 }
